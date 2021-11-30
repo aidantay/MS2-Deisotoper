@@ -1,0 +1,72 @@
+<project name="Deisotoping" default="main" basedir=".">
+	<property name="projectGui"  value="MS2-DeisotoperGUI"/>
+    <property name="project"     value="MS2-Deisotoper"/>
+	<property name="lib.dir"     value="${basedir}/lib"/>
+	<property name="src.dir"     value="${basedir}/src"/>
+    <property name="build.dir"   value="${basedir}/bin"/>
+	<property name="dist.dir"    value="${basedir}/dist"/>
+
+    <path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+    </path>
+
+   <target name="clean" description="clean up">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+	
+	<target name="compile" depends="clean" description="compile the source">
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build.dir}" />
+
+		<!-- Compile the java code from ${src.dir} into ${build.dir} -->
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
+			<classpath refid="build.classpath" />
+		</javac>
+	</target>
+
+    <target name="test" depends="compile" description="testing">
+        <!-- Test the java code -->
+        <junit haltonfailure="yes" fork="true" forkmode="perBatch">
+        	<classpath>
+        		<path refid="build.classpath" />
+        		<pathelement location="${build.dir}" />
+
+        	</classpath>
+        	<formatter type="brief" usefile="false" />        	
+        	<batchtest fork="yes">
+                <fileset dir="${src.dir}" includes="tests/*Tests.java" />
+            </batchtest>
+        </junit>
+    </target>
+
+	   <target name="dist" depends="test" description="output to JAR">
+	        <!-- Create the distribution directory -->
+	        <mkdir dir="${dist.dir}" />
+
+	        <!-- Put everything in ${build.dir} into the {$projectName}.jar file -->
+	        <jar jarfile="${dist.dir}/${projectGui}.jar" basedir="${build.dir}" >
+	            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+
+	            <manifest>
+	                <!-- create an executable Jar -->
+	                <attribute name="Main-Class" value="main.MS2DeisotoperGUI" />
+	            </manifest>
+	        </jar>
+	        
+	        <!-- Put everything in ${build.dir} into the {$projectName}.jar file -->
+	        <jar jarfile="${dist.dir}/${project}.jar" basedir="${build.dir}" >
+	            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+	        
+	            <manifest>
+	                <!-- create an executable Jar -->
+	                <attribute name="Main-Class" value="main.MS2Deisotoper" />
+	            </manifest>
+	        </jar>
+	    </target>
+	
+	<target name="main" depends="clean, compile, test, dist" />
+
+</project>

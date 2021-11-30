@@ -1,0 +1,41 @@
+#   MGF file created by MassMatrix MS data conversion tools for database search 
+#   Format of MGF files:
+#[Comments]
+#[Query 1]
+#[Query 2]
+#...
+#[Query N]
+#
+#   Format of each query:
+#BEGIN IONS
+#TITLE=[title of the entry]
+#SCANS=[scan#]
+#RTINSECONDS=[retention time in seconds]
+#CHARGE=[charge state of the spectrum]
+#PEPMASS=[precursor m/z value of the spectrum]
+#[m/z intensity of product ion 1]
+#[m/z intensity oListf product ion 2]
+#...
+#[m/z intensity of product ion m]
+#END IONS
+#
+########################################
+#    For more info,                    #
+#    please contact hxx58@case.edu     #
+#    or vist http://www.massmatrix.net #
+########################################
+
+BEGIN IONS
+TITLE=C:\Users\user\Desktop\MS\16-04-22 - QE\K562_nuclear_extract_band1_1ul.raw
+SCANS=2944
+RTINSECONDS=769.21536
+CHARGE=2+
+PEPMASS=391.284
+150.027 14126.1
+168.0374 1700.3
+368.795 3025.4
+371.8033 2277.2
+379.7966 1707.2
+391.8082 5891.6
+END IONS
+
